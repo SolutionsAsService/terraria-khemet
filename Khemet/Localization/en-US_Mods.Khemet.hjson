@@ -1,0 +1,157 @@
+Mods: {
+	Khemet: {
+		Items: {
+			SunstoneShard: {
+				DisplayName: '''Sunstone Shard'''
+				Tooltip: '''A splinter of captured noon.'''
+			}
+			DuatShard: {
+				DisplayName: '''Duat Shard'''
+				Tooltip: '''Cold light from the underworld of the dead.'''
+			}
+			Khopesh: {
+				DisplayName: '''Khopesh'''
+				Tooltip: '''A sickle-sword of the old kingdom.
+Cuts the undead 40% deeper.'''
+			}
+			PharaohsStaff: {
+				DisplayName: '''Pharaoh's Staff'''
+				Tooltip: '''Hurls bolts of noon light.'''
+			}
+			ScarabCharm: {
+				DisplayName: '''Scarab Charm'''
+				Tooltip: '''Increases movement speed by 12%
+Increases critical strike chance by 6%'''
+			}
+			AnkhOfLife: {
+				DisplayName: '''Ankh of Life'''
+				Tooltip: '''Increases maximum life by 40
+Increases life regeneration'''
+			}
+			KhopeshOfAnubis: {
+				DisplayName: '''Khopesh of Anubis'''
+				Tooltip: '''The judge's blade, edged with cold fire.
+Cuts the undead 40% deeper.'''
+			}
+			JudgementStaff: {
+				DisplayName: '''Staff of Judgement'''
+				Tooltip: '''Throws a piercing bolt from the underworld.'''
+			}
+			AmuletOfDuat: {
+				DisplayName: '''Amulet of the Duat'''
+				Tooltip: '''Increases damage by 12%
+Increases critical strike chance by 8%'''
+			}
+			SolarKhopesh: {
+				DisplayName: '''Solar Khopesh'''
+				Tooltip: '''Forged in the sun's own furnace.'''
+			}
+			SunStaff: {
+				DisplayName: '''Staff of the Sun'''
+				Tooltip: '''Calls down the noon.'''
+			}
+			SunDisc: {
+				DisplayName: '''Disc of Ra'''
+				Tooltip: '''Increases damage by 15%
+Increases maximum life by 60
+Increases life regeneration'''
+			}
+			CursedCartouche: {
+				DisplayName: '''Cursed Cartouche'''
+				Tooltip: '''Reads the name of a king who was erased.
+Summons the Forgotten Pharaoh in the desert.'''
+			}
+			ScalesOfJudgement: {
+				DisplayName: '''Scales of Judgement'''
+				Tooltip: '''Weighs a heart against a feather.
+Summons Anubis, the Judge.'''
+			}
+			RelicOfRa: {
+				DisplayName: '''Relic of Ra'''
+				Tooltip: '''A disc that holds a sun.
+Summons the Sun Pharaoh in the desert.'''
+			}
+			ForgottenPharaohBag: {
+				DisplayName: '''Treasure Bag (The Forgotten Pharaoh)'''
+				Tooltip: '''{$CommonItemTooltip.RightClickToOpen}'''
+			}
+			AnubisBag: {
+				DisplayName: '''Treasure Bag (Anubis)'''
+				Tooltip: '''{$CommonItemTooltip.RightClickToOpen}'''
+			}
+			SunPharaohBag: {
+				DisplayName: '''Treasure Bag (The Sun Pharaoh)'''
+				Tooltip: '''{$CommonItemTooltip.RightClickToOpen}'''
+			}
+			PharaohBrick: {
+				DisplayName: '''Pharaoh Brick'''
+				Tooltip: '''The pale stone of the pyramids.'''
+			}
+			GoldenSandstone: {
+				DisplayName: '''Golden Sandstone'''
+				Tooltip: '''Sandstone laid with gold, for capstones and courses.'''
+			}
+			HieroglyphBrick: {
+				DisplayName: '''Hieroglyph Brick'''
+				Tooltip: '''Brick cut with the old script.'''
+			}
+			LapisInlay: {
+				DisplayName: '''Lapis Inlay'''
+				Tooltip: '''Blue tile flecked with gold, for the floors of kings.'''
+			}
+			PharaohBrick: {
+				DisplayName: '''Pharaoh Brick'''
+				Tooltip: ''''''
+			}
+			GoldenSandstone: {
+				DisplayName: '''Golden Sandstone'''
+				Tooltip: ''''''
+			}
+			HieroglyphBrick: {
+				DisplayName: '''Hieroglyph Brick'''
+				Tooltip: ''''''
+			}
+			LapisInlay: {
+				DisplayName: '''Lapis Inlay'''
+				Tooltip: ''''''
+			}
+		}
+		NPCs: {
+			KhemetCobra: {
+				DisplayName: '''Tomb Cobra'''
+			}
+			TombGuardian: {
+				DisplayName: '''Tomb Guardian'''
+			}
+			ScarabSwarm: {
+				DisplayName: '''Sacred Scarab'''
+			}
+			ForgottenPharaoh: {
+				DisplayName: '''The Forgotten Pharaoh'''
+			}
+			Anubis: {
+				DisplayName: '''Anubis, the Judge'''
+			}
+			SunPharaoh: {
+				DisplayName: '''The Sun Pharaoh'''
+			}
+		}
+		Projectiles: {
+			ForgottenBolt: {
+				DisplayName: '''Sun Bolt'''
+			}
+			DuatFlame: {
+				DisplayName: '''Duat Flame'''
+			}
+			SunRay: {
+				DisplayName: '''Sun Ray'''
+			}
+			StaffBolt: {
+				DisplayName: '''Staff Bolt'''
+			}
+			JudgementBolt: {
+				DisplayName: '''Judgement Bolt'''
+			}
+		}
+	}
+}

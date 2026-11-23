@@ -1,0 +1,7 @@
+[
+  {"id": "ForgottenBolt", "name": "Sun Bolt", "hostile": true, "sprite": "orb", "palette": "sun", "size": [18, 18], "dust": "Torch", "light": [1.0, 0.8, 0.3], "time": 260},
+  {"id": "DuatFlame", "name": "Duat Flame", "hostile": true, "sprite": "ray", "palette": "duat", "size": [14, 34], "dust": "IceTorch", "light": [0.3, 0.8, 1.0], "time": 260},
+  {"id": "SunRay", "name": "Sun Ray", "hostile": true, "sprite": "ray", "palette": "flame", "size": [14, 34], "dust": "Fire", "light": [1.0, 0.5, 0.2], "time": 280},
+  {"id": "StaffBolt", "name": "Staff Bolt", "hostile": false, "sprite": "orb", "palette": "sun", "size": [18, 18], "dust": "Torch", "light": [1.0, 0.8, 0.3], "penetrate": 2, "time": 120},
+  {"id": "JudgementBolt", "name": "Judgement Bolt", "hostile": false, "sprite": "ray", "palette": "duat", "size": [14, 34], "dust": "IceTorch", "light": [0.3, 0.8, 1.0], "penetrate": 3, "time": 140}
+]

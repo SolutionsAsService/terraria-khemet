@@ -1,0 +1,10 @@
+[
+  {"id": "PharaohBrick", "name": "Pharaoh Brick", "tooltip": "The pale stone of the pyramids.", "pattern": "brick", "palette": "sand", "map_color": "#c4aa70", "dust": "Sand", "resist": 2,
+   "recipe": {"ingredients": [["vanilla:SandBlock", 4]], "station": "vanilla:WorkBenches", "count": 4}},
+  {"id": "GoldenSandstone", "name": "Golden Sandstone", "tooltip": "Sandstone laid with gold, for capstones and courses.", "pattern": "golden", "palette": "gold", "map_color": "#e8be3c", "dust": "Gold", "resist": 3,
+   "recipe": {"ingredients": [["mod:PharaohBrick", 4], ["vanilla:GoldBar", 1]], "station": "vanilla:Anvils", "count": 4}},
+  {"id": "HieroglyphBrick", "name": "Hieroglyph Brick", "tooltip": "Brick cut with the old script.", "pattern": "hieroglyph", "palette": "sand", "accent": "lapis", "map_color": "#96784a", "dust": "Sand", "resist": 2,
+   "recipe": {"ingredients": [["mod:PharaohBrick", 4]], "station": "vanilla:WorkBenches", "count": 4}},
+  {"id": "LapisInlay", "name": "Lapis Inlay", "tooltip": "Blue tile flecked with gold, for the floors of kings.", "pattern": "lapis", "palette": "lapis", "accent": "gold", "map_color": "#2a58b0", "dust": "Stone", "resist": 3,
+   "recipe": {"ingredients": [["mod:PharaohBrick", 4], ["vanilla:Sapphire", 1]], "station": "vanilla:Anvils", "count": 4}}
+]

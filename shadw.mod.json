@@ -1,0 +1,12 @@
+{
+  "schema": "shadw.mod/1",
+  "id": "terraria_khemet",
+  "name": "Khemet (Terraria)",
+  "version": "0.1.0",
+  "description": "Ancient Egypt for Terraria: the Grand Pyramid of Khemet, three pharaoh bosses, a tomb bestiary, relics and golden stone.",
+  "author": "SolutionsAsService",
+  "game": "terraria",
+  "adapter": "terraria-tmodloader",
+  "game_versions": ["1.4.4"],
+  "capabilities": ["items", "tiles", "npcs", "bosses", "projectiles", "recipes", "worldgen"]
+}

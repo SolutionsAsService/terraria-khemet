@@ -1,0 +1,275 @@
+[
+ {
+  "id": "KhemetCobra",
+  "name": "Tomb Cobra",
+  "ai": "fighter",
+  "sprite": "cobra",
+  "size": [
+   34,
+   48
+  ],
+  "life": 70,
+  "damage": 22,
+  "defense": 6,
+  "kb": 0.5,
+  "value": 120,
+  "spawn": {
+   "desert": 0.1,
+   "pyramid": 0.6
+  },
+  "drops": [
+   {
+    "item": "mod:SunstoneShard",
+    "denom": 4,
+    "min": 1,
+    "max": 2
+   }
+  ]
+ },
+ {
+  "id": "TombGuardian",
+  "name": "Tomb Guardian",
+  "ai": "fighter",
+  "sprite": "guardian",
+  "size": [
+   40,
+   56
+  ],
+  "life": 240,
+  "damage": 38,
+  "defense": 14,
+  "kb": 0.2,
+  "value": 600,
+  "spawn": {
+   "desert": 0.02,
+   "pyramid": 0.5
+  },
+  "drops": [
+   {
+    "item": "mod:SunstoneShard",
+    "denom": 2,
+    "min": 1,
+    "max": 3
+   },
+   {
+    "item": "vanilla:GoldCoin",
+    "denom": 3,
+    "min": 1,
+    "max": 2
+   }
+  ]
+ },
+ {
+  "id": "ScarabSwarm",
+  "name": "Sacred Scarab",
+  "ai": "bat",
+  "sprite": "scarab",
+  "size": [
+   30,
+   24
+  ],
+  "life": 24,
+  "damage": 18,
+  "defense": 2,
+  "kb": 0.8,
+  "value": 40,
+  "spawn": {
+   "desert": 0.12,
+   "pyramid": 0.9
+  },
+  "drops": []
+ },
+ {
+  "id": "ForgottenPharaoh",
+  "name": "The Forgotten Pharaoh",
+  "boss": true,
+  "sprite": "boss:forgotten",
+  "size": [
+   100,
+   120
+  ],
+  "life": 3400,
+  "damage": 30,
+  "defense": 10,
+  "music": "Boss2",
+  "gold": 5,
+  "hover": {
+   "height": 250,
+   "speed": 9
+  },
+  "attacks": {
+   "dash": {
+    "speed": 14,
+    "passes": 3
+   },
+   "volley": {
+    "projectile": "ForgottenBolt",
+    "count": 5,
+    "spread": 0.22,
+    "speed": 8,
+    "damage": 20,
+    "interval": 18
+   },
+   "summon": {
+    "npc": "mod:ScarabSwarm",
+    "count": 3
+   }
+  },
+  "bag": "ForgottenPharaohBag",
+  "flag": "downedForgottenPharaoh",
+  "drops": [
+   {
+    "item": "mod:AnkhOfLife",
+    "denom": 1
+   },
+   {
+    "item": "mod:Khopesh",
+    "denom": 3
+   },
+   {
+    "item": "mod:PharaohsStaff",
+    "denom": 3
+   },
+   {
+    "item": "mod:ScarabCharm",
+    "denom": 2
+   },
+   {
+    "item": "mod:SunstoneShard",
+    "min": 10,
+    "max": 16
+   },
+   {
+    "item": "vanilla:GoldBar",
+    "min": 8,
+    "max": 12
+   }
+  ]
+ },
+ {
+  "id": "Anubis",
+  "name": "Anubis, the Judge",
+  "boss": true,
+  "sprite": "boss:anubis",
+  "size": [
+   90,
+   130
+  ],
+  "life": 9500,
+  "damage": 62,
+  "defense": 20,
+  "music": "Boss3",
+  "gold": 15,
+  "hover": {
+   "height": 260,
+   "speed": 11
+  },
+  "attacks": {
+   "dash": {
+    "speed": 18,
+    "passes": 4
+   },
+   "volley": {
+    "projectile": "DuatFlame",
+    "count": 6,
+    "spread": 0.18,
+    "speed": 11,
+    "damage": 42,
+    "interval": 16
+   },
+   "summon": {
+    "npc": "mod:TombGuardian",
+    "count": 2
+   }
+  },
+  "bag": "AnubisBag",
+  "flag": "downedAnubis",
+  "drops": [
+   {
+    "item": "mod:AmuletOfDuat",
+    "denom": 1
+   },
+   {
+    "item": "mod:KhopeshOfAnubis",
+    "denom": 3
+   },
+   {
+    "item": "mod:JudgementStaff",
+    "denom": 3
+   },
+   {
+    "item": "mod:DuatShard",
+    "min": 12,
+    "max": 20
+   },
+   {
+    "item": "vanilla:HallowedBar",
+    "min": 8,
+    "max": 14
+   }
+  ]
+ },
+ {
+  "id": "SunPharaoh",
+  "name": "The Sun Pharaoh",
+  "boss": true,
+  "sprite": "boss:sun",
+  "size": [
+   140,
+   150
+  ],
+  "life": 42000,
+  "damage": 112,
+  "defense": 35,
+  "music": "LunarBoss",
+  "gold": 30,
+  "hover": {
+   "height": 300,
+   "speed": 13
+  },
+  "attacks": {
+   "dash": {
+    "speed": 22,
+    "passes": 4
+   },
+   "volley": {
+    "projectile": "SunRay",
+    "count": 8,
+    "spread": 0.14,
+    "speed": 14,
+    "damage": 80,
+    "interval": 14
+   },
+   "summon": {
+    "npc": "mod:ScarabSwarm",
+    "count": 4
+   }
+  },
+  "bag": "SunPharaohBag",
+  "flag": "downedSunPharaoh",
+  "drops": [
+   {
+    "item": "mod:SunDisc",
+    "denom": 1
+   },
+   {
+    "item": "mod:SolarKhopesh",
+    "denom": 3
+   },
+   {
+    "item": "mod:SunStaff",
+    "denom": 3
+   },
+   {
+    "item": "mod:DuatShard",
+    "min": 20,
+    "max": 30
+   },
+   {
+    "item": "mod:SunstoneShard",
+    "min": 20,
+    "max": 30
+   }
+  ]
+ }
+]

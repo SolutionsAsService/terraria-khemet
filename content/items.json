@@ -1,0 +1,434 @@
+[
+ {
+  "id": "SunstoneShard",
+  "name": "Sunstone Shard",
+  "tooltip": "A splinter of captured noon.",
+  "kind": "material",
+  "sprite": "shard",
+  "palette": "sun",
+  "size": [
+   22,
+   26
+  ],
+  "rarity": "Green",
+  "value": 2000
+ },
+ {
+  "id": "DuatShard",
+  "name": "Duat Shard",
+  "tooltip": "Cold light from the underworld of the dead.",
+  "kind": "material",
+  "sprite": "shard",
+  "palette": "duat",
+  "size": [
+   22,
+   26
+  ],
+  "rarity": "Lime",
+  "value": 9000
+ },
+ {
+  "id": "Khopesh",
+  "name": "Khopesh",
+  "tooltip": "A sickle-sword of the old kingdom.\nCuts the undead 40% deeper.",
+  "kind": "sword",
+  "sprite": "khopesh",
+  "palette": "gold",
+  "damage": 26,
+  "use_time": 22,
+  "knockback": 5,
+  "size": [
+   44,
+   44
+  ],
+  "rarity": "Orange",
+  "value": 27000,
+  "bonus_vs": [
+   "vanilla:Mummy",
+   "vanilla:DarkMummy",
+   "vanilla:LightMummy",
+   "vanilla:Zombie",
+   "vanilla:Skeleton",
+   "vanilla:Ghost",
+   "mod:TombGuardian"
+  ]
+ },
+ {
+  "id": "PharaohsStaff",
+  "name": "Pharaoh's Staff",
+  "tooltip": "Hurls bolts of noon light.",
+  "kind": "staff",
+  "sprite": "staff",
+  "palette": "wood",
+  "accent": "sun",
+  "damage": 28,
+  "mana": 9,
+  "use_time": 24,
+  "knockback": 3,
+  "shoot": "StaffBolt",
+  "shoot_speed": 11,
+  "size": [
+   40,
+   40
+  ],
+  "rarity": "Orange",
+  "value": 27000
+ },
+ {
+  "id": "ScarabCharm",
+  "name": "Scarab Charm",
+  "tooltip": "Increases movement speed by 12%\nIncreases critical strike chance by 6%",
+  "kind": "accessory",
+  "sprite": "charm",
+  "palette": "scarab",
+  "accent": "gold",
+  "size": [
+   30,
+   30
+  ],
+  "rarity": "Orange",
+  "value": 30000,
+  "effects": {
+   "speed": 0.12,
+   "crit": 6
+  }
+ },
+ {
+  "id": "AnkhOfLife",
+  "name": "Ankh of Life",
+  "tooltip": "Increases maximum life by 40\nIncreases life regeneration",
+  "kind": "accessory",
+  "sprite": "ankh",
+  "palette": "gold",
+  "size": [
+   32,
+   32
+  ],
+  "rarity": "Pink",
+  "value": 60000,
+  "effects": {
+   "life": 40,
+   "regen": 2
+  }
+ },
+ {
+  "id": "KhopeshOfAnubis",
+  "name": "Khopesh of Anubis",
+  "tooltip": "The judge's blade, edged with cold fire.\nCuts the undead 40% deeper.",
+  "kind": "sword",
+  "sprite": "khopesh",
+  "palette": "duat",
+  "damage": 78,
+  "use_time": 20,
+  "knockback": 6,
+  "size": [
+   44,
+   44
+  ],
+  "rarity": "Lime",
+  "value": 180000,
+  "bonus_vs": [
+   "vanilla:Mummy",
+   "vanilla:DarkMummy",
+   "vanilla:LightMummy",
+   "vanilla:Zombie",
+   "vanilla:Skeleton",
+   "vanilla:Ghost",
+   "mod:TombGuardian"
+  ]
+ },
+ {
+  "id": "JudgementStaff",
+  "name": "Staff of Judgement",
+  "tooltip": "Throws a piercing bolt from the underworld.",
+  "kind": "staff",
+  "sprite": "staff",
+  "palette": "basalt",
+  "accent": "duat",
+  "damage": 88,
+  "mana": 14,
+  "use_time": 22,
+  "knockback": 4,
+  "shoot": "JudgementBolt",
+  "shoot_speed": 14,
+  "size": [
+   40,
+   40
+  ],
+  "rarity": "Lime",
+  "value": 180000
+ },
+ {
+  "id": "AmuletOfDuat",
+  "name": "Amulet of the Duat",
+  "tooltip": "Increases damage by 12%\nIncreases critical strike chance by 8%",
+  "kind": "accessory",
+  "sprite": "charm",
+  "palette": "duat",
+  "accent": "basalt",
+  "size": [
+   30,
+   30
+  ],
+  "rarity": "Lime",
+  "value": 150000,
+  "effects": {
+   "damage": 0.12,
+   "crit": 8
+  }
+ },
+ {
+  "id": "SolarKhopesh",
+  "name": "Solar Khopesh",
+  "tooltip": "Forged in the sun's own furnace.",
+  "kind": "sword",
+  "sprite": "khopesh",
+  "palette": "flame",
+  "damage": 152,
+  "use_time": 18,
+  "knockback": 7,
+  "size": [
+   44,
+   44
+  ],
+  "rarity": "Red",
+  "value": 500000,
+  "bonus_vs": [
+   "vanilla:Mummy",
+   "vanilla:DarkMummy",
+   "vanilla:LightMummy",
+   "vanilla:Zombie",
+   "vanilla:Skeleton",
+   "vanilla:Ghost",
+   "mod:TombGuardian"
+  ]
+ },
+ {
+  "id": "SunStaff",
+  "name": "Staff of the Sun",
+  "tooltip": "Calls down the noon.",
+  "kind": "staff",
+  "sprite": "staff",
+  "palette": "gold",
+  "accent": "flame",
+  "damage": 170,
+  "mana": 20,
+  "use_time": 20,
+  "knockback": 5,
+  "shoot": "StaffBolt",
+  "shoot_speed": 16,
+  "size": [
+   40,
+   40
+  ],
+  "rarity": "Red",
+  "value": 500000
+ },
+ {
+  "id": "SunDisc",
+  "name": "Disc of Ra",
+  "tooltip": "Increases damage by 15%\nIncreases maximum life by 60\nIncreases life regeneration",
+  "kind": "accessory",
+  "sprite": "ankh",
+  "palette": "sun",
+  "size": [
+   32,
+   32
+  ],
+  "rarity": "Red",
+  "value": 400000,
+  "effects": {
+   "damage": 0.15,
+   "life": 60,
+   "regen": 3
+  }
+ },
+ {
+  "id": "CursedCartouche",
+  "name": "Cursed Cartouche",
+  "tooltip": "Reads the name of a king who was erased.\nSummons the Forgotten Pharaoh in the desert.",
+  "kind": "summon",
+  "boss": "ForgottenPharaoh",
+  "desert": true,
+  "sprite": "cartouche",
+  "palette": "gold",
+  "accent": "blood",
+  "size": [
+   30,
+   36
+  ],
+  "rarity": "Orange",
+  "value": 10000,
+  "recipe": {
+   "ingredients": [
+    [
+     "mod:SunstoneShard",
+     8
+    ],
+    [
+     "vanilla:GoldBar",
+     4
+    ]
+   ],
+   "station": "vanilla:Anvils"
+  }
+ },
+ {
+  "id": "ScalesOfJudgement",
+  "name": "Scales of Judgement",
+  "tooltip": "Weighs a heart against a feather.\nSummons Anubis, the Judge.",
+  "kind": "summon",
+  "boss": "Anubis",
+  "desert": true,
+  "sprite": "cartouche",
+  "palette": "basalt",
+  "accent": "duat",
+  "size": [
+   30,
+   36
+  ],
+  "rarity": "Lime",
+  "value": 50000,
+  "recipe": {
+   "ingredients": [
+    [
+     "mod:DuatShard",
+     10
+    ],
+    [
+     "vanilla:HallowedBar",
+     6
+    ]
+   ],
+   "station": "vanilla:MythrilAnvil"
+  }
+ },
+ {
+  "id": "RelicOfRa",
+  "name": "Relic of Ra",
+  "tooltip": "A disc that holds a sun.\nSummons the Sun Pharaoh in the desert.",
+  "kind": "summon",
+  "boss": "SunPharaoh",
+  "desert": true,
+  "sprite": "cartouche",
+  "palette": "sun",
+  "accent": "flame",
+  "size": [
+   30,
+   36
+  ],
+  "rarity": "Red",
+  "value": 100000,
+  "recipe": {
+   "ingredients": [
+    [
+     "mod:DuatShard",
+     12
+    ],
+    [
+     "mod:SunstoneShard",
+     20
+    ],
+    [
+     "vanilla:HallowedBar",
+     10
+    ]
+   ],
+   "station": "vanilla:MythrilAnvil"
+  }
+ },
+ {
+  "id": "ForgottenPharaohBag",
+  "name": "Treasure Bag (The Forgotten Pharaoh)",
+  "tooltip": "{$CommonItemTooltip.RightClickToOpen}",
+  "kind": "bag",
+  "boss": "ForgottenPharaoh",
+  "sprite": "bag",
+  "palette": "wood",
+  "accent": "gold",
+  "prehardmode": true,
+  "drops": [
+   {
+    "item": "mod:AnkhOfLife",
+    "denom": 1
+   },
+   {
+    "item": "mod:ScarabCharm",
+    "denom": 2
+   },
+   {
+    "item": "mod:SunstoneShard",
+    "min": 10,
+    "max": 16
+   },
+   {
+    "item": "vanilla:GoldBar",
+    "min": 8,
+    "max": 12
+   }
+  ]
+ },
+ {
+  "id": "AnubisBag",
+  "name": "Treasure Bag (Anubis)",
+  "tooltip": "{$CommonItemTooltip.RightClickToOpen}",
+  "kind": "bag",
+  "boss": "Anubis",
+  "sprite": "bag",
+  "palette": "basalt",
+  "accent": "duat",
+  "drops": [
+   {
+    "item": "mod:AmuletOfDuat",
+    "denom": 1
+   },
+   {
+    "item": "mod:KhopeshOfAnubis",
+    "denom": 3
+   },
+   {
+    "item": "mod:JudgementStaff",
+    "denom": 3
+   },
+   {
+    "item": "mod:DuatShard",
+    "min": 12,
+    "max": 20
+   }
+  ]
+ },
+ {
+  "id": "SunPharaohBag",
+  "name": "Treasure Bag (The Sun Pharaoh)",
+  "tooltip": "{$CommonItemTooltip.RightClickToOpen}",
+  "kind": "bag",
+  "boss": "SunPharaoh",
+  "sprite": "bag",
+  "palette": "sun",
+  "accent": "flame",
+  "drops": [
+   {
+    "item": "mod:SunDisc",
+    "denom": 1
+   },
+   {
+    "item": "mod:SolarKhopesh",
+    "denom": 3
+   },
+   {
+    "item": "mod:SunStaff",
+    "denom": 3
+   },
+   {
+    "item": "mod:DuatShard",
+    "min": 20,
+    "max": 30
+   },
+   {
+    "item": "mod:SunstoneShard",
+    "min": 20,
+    "max": 30
+   }
+  ]
+ }
+]

@@ -1,0 +1,98 @@
+[
+ {
+  "id": "GrandPyramid",
+  "kind": "grand_pyramid",
+  "width": 121,
+  "height": 60,
+  "depth": 34,
+  "chest_loot": {
+   "gates": [
+    {
+     "item": "vanilla:GoldCoin",
+     "min": 1,
+     "max": 3
+    },
+    {
+     "item": "vanilla:HealingPotion",
+     "min": 1,
+     "max": 3
+    },
+    {
+     "item": "mod:SunstoneShard",
+     "min": 1,
+     "max": 3,
+     "chance": 0.5
+    }
+   ],
+   "judgement": [
+    {
+     "item": "mod:SunstoneShard",
+     "min": 4,
+     "max": 9
+    },
+    {
+     "item": "vanilla:GoldBar",
+     "min": 3,
+     "max": 7
+    },
+    {
+     "item": "mod:ScarabCharm",
+     "chance": 0.15
+    }
+   ],
+   "vault": [
+    {
+     "item": "vanilla:GoldCoin",
+     "min": 5,
+     "max": 12
+    },
+    {
+     "item": "vanilla:GoldBar",
+     "min": 8,
+     "max": 16
+    },
+    {
+     "item": "mod:CursedCartouche",
+     "chance": 0.5
+    },
+    {
+     "item": "mod:Khopesh",
+     "chance": 0.25
+    }
+   ],
+   "crypt": [
+    {
+     "item": "vanilla:Bone",
+     "min": 6,
+     "max": 14
+    },
+    {
+     "item": "mod:ScarabCharm",
+     "chance": 0.3
+    },
+    {
+     "item": "vanilla:HealingPotion",
+     "min": 1,
+     "max": 2
+    }
+   ],
+   "throne": [
+    {
+     "item": "mod:CursedCartouche",
+     "min": 1,
+     "max": 1
+    },
+    {
+     "item": "vanilla:GoldCoin",
+     "min": 8,
+     "max": 20
+    },
+    {
+     "item": "mod:SunstoneShard",
+     "min": 6,
+     "max": 12
+    }
+   ]
+  }
+ }
+]
