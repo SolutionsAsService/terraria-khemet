@@ -47,7 +47,7 @@ Edit the JSON, not `Khemet/`. (With the SHADW CLI: `shadw-mod content . gen`.)
   against a real tModLoader download. Expect to fix a few API details on the first real build.
 * Nothing has been played: boss balance, the attack patterns, the spawn rates and the pyramid's feel are untested. The pyramid's layout is proven only on paper: the generator flood-fills the
   blueprint from the entrance and confirms every room can be reached, and renders `preview/grand-pyramid.png`.
-* Sprites are generated pixel art and are a first pass (the boss wings are thin; the enemies use vanilla zombie and bat animation timing).
+* Sprites are generated pixel art, redrawn on 2026-11-24 with a lit-primitive toolkit (the owner graded the first pass C-; the redraw awaits a grade: see `preview/grade-sheet.png`, numbered G1.., plus `preview/silhouettes.png` and `preview/actual-size.png`). The enemies use vanilla zombie and bat animation timing.
 * No armour yet (a set needs the head, body and leg sheets drawn on the player template), no trophies or relics, no music, no custom walls.
 * The vanilla ID names the generated code uses are listed as "unverified" by the check when they are not in the generator's confirmed list; the real build is the check on those.
 
