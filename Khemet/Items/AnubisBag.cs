@@ -37,6 +37,7 @@ namespace Khemet.Items
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.KhopeshOfAnubis>(), 3, 1, 1));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.JudgementStaff>(), 3, 1, 1));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.DuatShard>(), 1, 12, 20));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.BowOfHorus>(), 3, 1, 1));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NPCs.Anubis>()));
         }
     }

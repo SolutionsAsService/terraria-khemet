@@ -173,6 +173,7 @@ namespace Khemet.NPCs
             notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.JudgementStaff>(), 3, 1, 1));
             notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.DuatShard>(), 1, 12, 20));
             notExpert.OnSuccess(ItemDropRule.Common(ItemID.HallowedBar, 1, 8, 14));
+            notExpert.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.BowOfHorus>(), 3, 1, 1));
             npcLoot.Add(notExpert);
         }
 

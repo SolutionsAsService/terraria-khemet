@@ -22,23 +22,26 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from tlib import cs, psprite as ps, pyramid  # noqa: E402
+from tlib import cs, psprite as ps, pyramid, structs  # noqa: E402
 
 KNOWN = {  # vanilla names the generator relies on and is confident exist; anything else is reported as unverified
-    "ItemID": {"GoldBar", "IronBar", "Silk", "Cactus", "SandBlock", "Sandstone", "Bone", "LifeCrystal", "HealingPotion", "GreaterHealingPotion", "LesserHealingPotion", "SoulofFlight", "SoulofNight", "SoulofLight",
+    "ItemID": {"BottledWater", "StoneBlock", "Obsidian", "Leather", "Feather", "Cobweb", "Gel", "Lens", "GoldBar", "IronBar", "Silk", "Cactus", "SandBlock", "Sandstone", "Bone", "LifeCrystal", "HealingPotion", "GreaterHealingPotion", "LesserHealingPotion", "SoulofFlight", "SoulofNight", "SoulofLight",
                "HallowedBar", "AdamantiteBar", "TitaniumBar", "Ruby", "Amber", "Topaz", "Sapphire", "Emerald", "Diamond", "Amethyst", "Cloud", "RainCloud", "FallenStar", "ShinyRedBalloon", "BandofRegeneration", "MagicMirror",
                "GoldCoin", "SilverCoin", "PlatinumBar", "Torch", "Wood", "Chain", "Spike", "ManaPotion", "GreaterManaPotion", "Fireblossom", "Daybloom", "SpelunkerPotion", "IronskinPotion", "SwiftnessPotion", "AncientCloth"},
     "NPCID": {"Zombie", "CaveBat", "Mummy", "DarkMummy", "LightMummy", "Skeleton", "Ghost", "Tumbleweed", "Antlion", "WalkingAntlion", "Vulture", "Wraith", "Mimic", "Pixie"},
-    "TileID": {"Anvils", "Sandstone", "HardenedSand", "Sand", "Platforms", "Spikes", "Torches", "Containers", "WorkBenches", "Furnaces", "MythrilAnvil", "AdamantiteForge", "DemonAltar"},
+    "TileID": {"Bottles", "Rope", "Grass", "Dirt", "Stone", "Anvils", "Sandstone", "HardenedSand", "Sand", "Platforms", "Spikes", "Torches", "Containers", "WorkBenches", "Furnaces", "MythrilAnvil", "AdamantiteForge", "DemonAltar"},
     "DustID": {"Sand", "Torch", "IceTorch", "Gold", "BlueTorch", "YellowTorch", "Stone", "Fire", "Smoke"},
     "MusicID": {"Boss1", "Boss2", "Boss3", "Boss4", "Boss5", "Eclipse", "TheTowers", "LunarBoss", "PlanteraBattle"},
-    "SoundID": {"Item1", "Item8", "Item20", "Item43", "NPCHit1", "NPCHit54", "NPCDeath1", "NPCDeath6", "Roar", "Tink"},
-    "WallID": {"SandstoneBrick"},
+    "SoundID": {"Item1", "Item3", "Item5", "Item8", "Item14", "Item20", "Item43", "NPCHit1", "NPCHit54", "NPCDeath1", "NPCDeath6", "Roar", "Tink"},
+    "WallID": {"SandstoneBrick", "GrayBrick"},
     "NPCAIStyleID": {"Fighter", "Bat"},
     "ItemRarityID": {"White", "Blue", "Green", "Orange", "LightRed", "Pink", "LightPurple", "Lime", "Yellow", "Cyan", "Red", "Purple", "Expert"},
-    "ItemUseStyleID": {"Swing", "Shoot", "HoldUp"},
+    "ItemUseStyleID": {"Swing", "Shoot", "HoldUp", "DrinkLiquid"},
     "MessageID": {"WorldData", "SpawnBossUseLicenseStartEvent"},
     "NetmodeID": {"MultiplayerClient", "Server", "SinglePlayer"},
+    "ProjectileID": {"WoodenArrowFriendly"},
+    "AmmoID": {"Arrow"},
+    "BuffID": {"Slow", "Weak", "OnFire", "Poisoned", "Bleeding", "Confused", "Darkness", "Cursed", "Silenced", "BrokenArmor"},
 }
 
 
@@ -66,6 +69,7 @@ class Mod:
         self.projs = jread(c / "projectiles.json") or []
         self.npcs = jread(c / "npcs.json") or []
         self.structs = jread(c / "structures.json") or []
+        self.buffs = jread(c / "buffs.json") or []
         self.out = self.root / self.name
 
     # all the items a tile contributes (the placeable block) join the item list
@@ -119,10 +123,12 @@ def lint(m):
 
     for it in m.all_items():
         w = f"item {it['id']}"
-        if it["kind"] not in ("sword", "staff", "accessory", "material", "tile", "summon", "bag"):
+        if it["kind"] not in ("sword", "staff", "bow", "potion", "accessory", "material", "tile", "summon", "bag"):
             errors.append(f"{w}: unknown kind {it['kind']}")
         if it["kind"] == "staff" and it.get("shoot") not in projs:
             errors.append(f"{w}: shoots '{it.get('shoot')}', which is not a projectile")
+        if it["kind"] == "potion" and it.get("buff") not in {b["id"] for b in m.buffs}:
+            errors.append(f"{w}: buff '{it.get('buff')}' is not in buffs.json")
         if it["kind"] in ("summon", "bag") and it.get("boss") not in npcs:
             errors.append(f"{w}: boss '{it.get('boss')}' is not an NPC")
         for d in it.get("drops", []):
@@ -150,20 +156,30 @@ def lint(m):
             if a.get("summon"):
                 npc_ref(a["summon"]["npc"], w)
     for t in m.tiles:
-        if t.get("pattern") not in ("brick", "golden", "hieroglyph", "lapis"):
+        if t.get("pattern") not in ("brick", "golden", "hieroglyph", "lapis", "marble", "blackmarble", "meander", "bronze"):
             errors.append(f"tile {t['id']}: unknown pattern {t.get('pattern')}")
-    # the pyramid: every room reachable, chests placed
-    for s in m.structs:
-        if s["kind"] == "grand_pyramid":
-            bp = pyramid.grand_pyramid(s)
-            reach, n = pyramid.connected(bp)
-            for room, ok in reach.items():
-                if not ok:
-                    errors.append(f"structure {s['id']}: the {room} cannot be reached from the entrance")
-            roles = {r for (_, _, r) in bp["chests"]}
-            for role in s.get("chest_loot", {}):
-                if role not in roles:
-                    errors.append(f"structure {s['id']}: chest_loot names role '{role}', but no chest of that role was placed")
+    # structures: every room reachable, chests placed, tiles and spawn areas exist
+    sids = {x["id"] for x in m.structs}
+    for st in m.structs:
+        bp = structs.build(st)
+        reach, n = pyramid.connected(bp)
+        for room, ok in reach.items():
+            if not ok:
+                errors.append(f"structure {st['id']}: the {room} cannot be reached from the entrance")
+        roles = {r for (_, _, r) in bp["chests"]}
+        for role in st.get("chest_loot", {}):
+            if role not in roles:
+                errors.append(f"structure {st['id']}: chest_loot names role '{role}', but no chest of that role was placed")
+        for ch, tid in st.get("tile_map", cs.DEFAULT_TILES).items():
+            if tid not in tiles:
+                errors.append(f"structure {st['id']}: tile_map {ch} -> {tid} is not a tile")
+        for role, drops in st.get("chest_loot", {}).items():
+            for d in drops:
+                ref(d["item"], f"structure {st['id']} chest {role}")
+    for n_ in m.npcs:
+        for area in (n_.get("spawn") or {}).get("areas", {}):
+            if area not in sids:
+                errors.append(f"npc {n_['id']}: spawn area '{area}' is not a structure")
     # generated files
     if m.out.exists():
         for it in m.all_items():
@@ -182,39 +198,89 @@ def lint(m):
 def item_sprite(it):
     p = ps.pal(it.get("palette", "gold"))
     a = ps.pal(it.get("accent", "gold"))
-    s = it.get("sprite")
-    return {"khopesh": lambda: ps.item_khopesh(p), "staff": lambda: ps.item_staff(ps.pal(it.get("palette", "wood")), ps.pal(it.get("accent", "sun"))), "ankh": lambda: ps.item_ankh(p),
-            "charm": lambda: ps.item_charm(p, a), "shard": lambda: ps.item_shard(p), "cartouche": lambda: ps.item_cartouche(p, a), "bag": lambda: ps.item_bag(p, a)}[s]()
+    sp = it.get("sprite")
+    table = {"khopesh": lambda: ps.item_khopesh(p), "staff": lambda: ps.item_staff(ps.pal(it.get("palette", "wood")), ps.pal(it.get("accent", "sun"))), "ankh": lambda: ps.item_ankh(p),
+             "charm": lambda: ps.item_charm(p, a), "shard": lambda: ps.item_shard(p), "cartouche": lambda: ps.item_cartouche(p, a), "bag": lambda: ps.item_bag(p, a),
+             "xiphos": lambda: ps.item_xiphos(p), "labrys": lambda: ps.item_labrys(p, ps.pal(it.get("accent", "wood"))), "trident": lambda: ps.item_trident(p), "thunderbolt": lambda: ps.item_thunderbolt(p),
+             "shield": lambda: ps.item_shield(p, a), "sandals": lambda: ps.item_sandals(p, a), "laurel": lambda: ps.item_laurel(p), "bar": lambda: ps.item_bar(p), "potion": lambda: ps.item_potion(p),
+             "horn": lambda: ps.item_horn(p), "mirror": lambda: ps.item_mirror(p, a), "flower": lambda: ps.item_flower(p), "scale": lambda: ps.item_scale(p), "bow": lambda: ps.item_bow(p)}
+    return table[sp]()
 
 
 def tile_canvas(t):
-    return ps.tile16(t["pattern"], ps.pal(t.get("palette", "sand")), ps.pal(t["accent"]) if t.get("accent") else None)
+    pat = t["pattern"]
+    pl = ps.pal(t.get("palette", "sand"))
+    ac = ps.pal(t["accent"]) if t.get("accent") else None
+    if pat in ("marble", "blackmarble", "meander", "bronze"):
+        return ps.tile16_greek(pat, pl, ac)
+    return ps.tile16(pat, pl, ac)
 
 
 def npc_sheet(n):
-    s = n["sprite"]
-    if s == "cobra":
+    sp = n["sprite"]
+    if sp == "cobra":
         return ps.sheet([ps.enemy_cobra(i) for i in range(3)])
-    if s == "guardian":
+    if sp == "guardian":
         return ps.sheet([ps.enemy_guardian(i) for i in range(3)])
-    if s == "scarab":
+    if sp == "scarab":
         return ps.sheet([ps.enemy_scarab(i) for i in range(4)])
-    if s.startswith("boss:"):
+    if sp in ("hoplite", "satyr", "cyclops"):
+        return ps.sheet([ps.enemy_humanoid(i, sp, *n["size"]) for i in range(3)])
+    if sp == "bird":
+        return ps.sheet([ps.enemy_bird(i, *n["size"]) for i in range(4)])
+    if sp == "snake":
+        return ps.sheet([ps.enemy_snake(i, *n["size"]) for i in range(3)])
+    if sp.startswith("boss:"):
         w, h = n["size"]
-        return ps.sheet([ps.boss_pharaoh(i, s.split(":")[1], w, h) for i in range(4)])
-    raise SpecError(f"npc {n['id']}: unknown sprite {s}")
+        kind = sp.split(":")[1]
+        if kind == "minotaur":
+            return ps.sheet([ps.boss_minotaur(i, w, h) for i in range(4)])
+        if kind in ("medusa", "zeus"):
+            return ps.sheet([ps.boss_olympian(i, kind, w, h) for i in range(4)])
+        return ps.sheet([ps.boss_pharaoh(i, kind, w, h) for i in range(4)])
+    raise SpecError(f"npc {n['id']}: unknown sprite {sp}")
+
+
+def boss_frame(kind, i, w, h):
+    if kind == "minotaur":
+        return ps.boss_minotaur(i, w, h)
+    if kind in ("medusa", "zeus"):
+        return ps.boss_olympian(i, kind, w, h)
+    return ps.boss_pharaoh(i, kind, w, h)
+
+
+def boss_head(kind):
+    c = boss_frame(kind, 0, 96, 104)
+    out = ps.Canvas(24, 24)
+    # the head and shoulders: the top 60% of the sprite, scaled to 24 by 24
+    for y in range(24):
+        for x in range(24):
+            sx, sy = int(x * 4), int(y * 104 * 0.6 / 24)
+            out.px[y * 24 + x] = c.px[sy * c.w + sx] if sy < c.h and sx < c.w else ps.CLEAR
+    return out
 
 
 def proj_sprite(p):
     pa = ps.pal(p.get("palette", "sun"))
-    return ps.projectile_ray(pa) if p.get("sprite") == "ray" else ps.projectile_orb(pa, *p.get("size", [18, 18]))
+    sp = p.get("sprite")
+    if sp == "ray":
+        return ps.projectile_ray(pa)
+    if sp == "bolt":
+        return ps.projectile_bolt(pa)
+    if sp == "rock":
+        return ps.projectile_rock(pa)
+    return ps.projectile_orb(pa, *p.get("size", [18, 18]))
+
+
+def buff_sprite(b):
+    return ps.buff_icon(ps.pal(b.get("palette", "gold")), b.get("glyph", "heart"))
 
 
 def gen(m):
     out = m.out
     ns = m.name
     if out.exists():
-        for sub in ("Items", "Tiles", "NPCs", "Projectiles", "Systems", "Localization"):
+        for sub in ("Items", "Tiles", "NPCs", "Projectiles", "Systems", "Localization", "Buffs"):
             shutil.rmtree(out / sub, ignore_errors=True)
     files = {}
     for it in m.all_items():
@@ -225,14 +291,16 @@ def gen(m):
         files[f"Projectiles/{p['id']}.cs"] = cs.projectile_cs(p)
     for n in m.npcs:
         files[f"NPCs/{n['id']}.cs"] = cs.boss_cs(n) if n.get("boss") else cs.enemy_cs(n)
-    files["Systems/KhemetWorld.cs"] = cs.world_cs(m.flags())
-    for s in m.structs:
-        if s["kind"] == "grand_pyramid":
-            bp = pyramid.grand_pyramid(s)
-            files["Systems/PyramidBlueprint.cs"] = cs.blueprint_cs(bp)
-            files["Systems/PyramidGenSystem.cs"] = cs.pyramid_gen_cs(s, bp)
+    areas = [st["id"] for st in m.structs]
+    files["Systems/KhemetWorld.cs"] = cs.world_cs(m.flags(), areas)
+    for st in m.structs:
+        bp = structs.build(st)
+        files[f"Systems/{st['id']}Blueprint.cs"] = cs.blueprint_cs(bp, st["id"])
+        files[f"Systems/{st['id']}GenSystem.cs"] = cs.structure_gen_cs(st, bp)
+    for bf in m.buffs:
+        files[f"Buffs/{bf['id']}.cs"] = cs.buff_cs(bf)
     files["KhemetMod.cs"] = cs.mod_cs()
-    files["Localization/en-US_Mods.Khemet.hjson"] = cs.hjson(m.all_items(), m.tiles, m.npcs, m.projs)
+    files["Localization/en-US_Mods.Khemet.hjson"] = cs.hjson(m.all_items(), m.tiles, m.npcs, m.projs, m.buffs)
     meta = m.meta
     files["build.txt"] = f"displayName = {meta.get('display', ns)}\nauthor = {meta.get('author', 'SolutionsAsService')}\nversion = {meta.get('version', '0.1.0')}\nbuildIgnore = *.csproj, *.user, obj\\*, bin\\*, .vs\\*\n"
     files["description.txt"] = meta.get("description", ns) + "\n"
@@ -267,7 +335,9 @@ def gen(m):
     for n in m.npcs:
         npc_sheet(n).save(out / f"NPCs/{n['id']}.png")
         if n.get("boss"):
-            ps.boss_head_icon(n["sprite"].split(":")[1]).save(out / f"NPCs/{n['id']}_Head_Boss.png")
+            boss_head(n["sprite"].split(":")[1]).save(out / f"NPCs/{n['id']}_Head_Boss.png")
+    for bf in m.buffs:
+        buff_sprite(bf).save(out / f"Buffs/{bf['id']}.png")
     ps.item_ankh(ps.pal("gold"), 80, 80).save(out / "icon.png")
     return len(files)
 
@@ -297,12 +367,13 @@ def preview(m):
         canvas.save(path)
 
     board([item_sprite(i) for i in m.items if i["kind"] != "tile"], 4, (40, 36, 48, 255), pv / "items.png", wrap=1100)
-    board([tile_canvas(t) for t in m.tiles] + [ps.projectile_orb(ps.pal(p.get("palette", "sun"))) if p.get("sprite") != "ray" else ps.projectile_ray(ps.pal(p.get("palette", "sun"))) for p in m.projs], 6, (40, 36, 48, 255), pv / "tiles-and-projectiles.png", wrap=1100)
+    board([tile_canvas(t) for t in m.tiles] + [proj_sprite(p) for p in m.projs], 6, (40, 36, 48, 255), pv / "tiles-and-projectiles.png", wrap=1100)
     cells = []
     for n in m.enemies():
         sh = npc_sheet(n)
-        fh = sh.h // (3 if n["sprite"] in ("cobra", "guardian") else 4)
-        for i in range(sh.h // fh):
+        nf = 4 if n["sprite"] in ("scarab", "bird") else 3
+        fh = sh.h // nf
+        for i in range(nf):
             f = ps.Canvas(sh.w, fh)
             for y in range(fh):
                 for x in range(sh.w):
@@ -313,12 +384,13 @@ def preview(m):
     for n in m.bosses():
         w, h = n["size"]
         for fr in (0, 2):
-            bcells.append(ps.boss_pharaoh(fr, n["sprite"].split(":")[1], w, h))
+            bcells.append(boss_frame(n["sprite"].split(":")[1], fr, w, h))
     board(bcells, 2, (70, 90, 140, 255), pv / "bosses.png", wrap=1100)
-    for s in m.structs:
-        if s["kind"] == "grand_pyramid":
-            bp = pyramid.grand_pyramid(s)
-            pyramid.render(bp, pv / "grand-pyramid.png")
+    if m.buffs:
+        board([buff_sprite(b) for b in m.buffs], 4, (40, 36, 48, 255), pv / "buffs.png", wrap=1100)
+    for st in m.structs:
+        bp = structs.build(st)
+        pyramid.render(bp, pv / (re.sub(r"(?<!^)(?=[A-Z])", "-", st["id"]).lower() + ".png"), 6 if bp["width"] > 70 else 8)
     return pv
 
 
@@ -326,7 +398,7 @@ def preview(m):
 def scan_ids(out):
     names = {}
     for p in out.rglob("*.cs"):
-        for cls, name in re.findall(r"\b(ItemID|NPCID|TileID|DustID|MusicID|SoundID|WallID|NPCAIStyleID|ItemRarityID|ItemUseStyleID|MessageID|NetmodeID)\.(\w+)", p.read_text(encoding="utf-8")):
+        for cls, name in re.findall(r"\b(ItemID|NPCID|TileID|DustID|MusicID|SoundID|WallID|NPCAIStyleID|ItemRarityID|ItemUseStyleID|MessageID|NetmodeID|ProjectileID|AmmoID|BuffID)\.(\w+)", p.read_text(encoding="utf-8")):
             if name != "Sets":
                 names.setdefault(cls, set()).add(name)
     return names
@@ -334,7 +406,7 @@ def scan_ids(out):
 
 def ids_cs(names):
     lines = ["// Generated by shadw-mod content check: the vanilla IDs the code uses, as names only.", "namespace Terraria.ID", "{"]
-    for cls in ("ItemID", "NPCID", "TileID", "DustID", "MusicID", "SoundID", "WallID", "NPCAIStyleID", "ItemRarityID", "ItemUseStyleID", "MessageID", "NetmodeID"):
+    for cls in ("ItemID", "NPCID", "TileID", "DustID", "MusicID", "SoundID", "WallID", "NPCAIStyleID", "ItemRarityID", "ItemUseStyleID", "MessageID", "NetmodeID", "ProjectileID", "AmmoID", "BuffID"):
         typ = "Terraria.Audio.SoundStyle" if cls == "SoundID" else "int"
         decl = [f"        public static readonly {typ} {n} = default({typ});" if cls == "SoundID" else f"        public const int {n} = 0;" for n in sorted(names.get(cls, ()))]
         extra = ""

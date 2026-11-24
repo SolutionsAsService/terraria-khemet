@@ -206,6 +206,10 @@
     "item": "vanilla:HallowedBar",
     "min": 8,
     "max": 14
+   },
+   {
+    "item": "mod:BowOfHorus",
+    "denom": 3
    }
   ]
  },

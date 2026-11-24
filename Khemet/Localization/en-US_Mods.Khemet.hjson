@@ -83,6 +83,19 @@ Summons the Sun Pharaoh in the desert.'''
 				DisplayName: '''Treasure Bag (The Sun Pharaoh)'''
 				Tooltip: '''{$CommonItemTooltip.RightClickToOpen}'''
 			}
+			BowOfHorus: {
+				DisplayName: '''Bow of Horus'''
+				Tooltip: '''The falcon-god's bow.
+Uses arrows.'''
+			}
+			SunwaterPotion: {
+				DisplayName: '''Sunwater'''
+				Tooltip: '''Water that has stood a day in the noon.'''
+			}
+			DuatElixir: {
+				DisplayName: '''Elixir of the Duat'''
+				Tooltip: '''See as the dead see.'''
+			}
 			PharaohBrick: {
 				DisplayName: '''Pharaoh Brick'''
 				Tooltip: '''The pale stone of the pyramids.'''
@@ -151,6 +164,16 @@ Summons the Sun Pharaoh in the desert.'''
 			}
 			JudgementBolt: {
 				DisplayName: '''Judgement Bolt'''
+			}
+		}
+		Buffs: {
+			SolarBlessing: {
+				DisplayName: '''Solar Blessing'''
+				Description: '''Damage and life regeneration increased'''
+			}
+			DuatSight: {
+				DisplayName: '''Duat Sight'''
+				Description: '''Critical strike chance and movement speed increased'''
 			}
 		}
 	}

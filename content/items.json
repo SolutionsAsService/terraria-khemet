@@ -394,6 +394,10 @@
     "item": "mod:DuatShard",
     "min": 12,
     "max": 20
+   },
+   {
+    "item": "mod:BowOfHorus",
+    "denom": 3
    }
   ]
  },
@@ -430,5 +434,81 @@
     "max": 30
    }
   ]
+ },
+ {
+  "id": "BowOfHorus",
+  "name": "Bow of Horus",
+  "tooltip": "The falcon-god's bow.\nUses arrows.",
+  "kind": "bow",
+  "sprite": "bow",
+  "palette": "gold",
+  "damage": 84,
+  "use_time": 15,
+  "knockback": 4,
+  "shoot_speed": 17,
+  "size": [
+   36,
+   44
+  ],
+  "rarity": "Lime",
+  "value": 170000
+ },
+ {
+  "id": "SunwaterPotion",
+  "name": "Sunwater",
+  "tooltip": "Water that has stood a day in the noon.",
+  "kind": "potion",
+  "sprite": "potion",
+  "palette": "sun",
+  "buff": "SolarBlessing",
+  "seconds": 420,
+  "size": [
+   22,
+   30
+  ],
+  "rarity": "Green",
+  "value": 6000,
+  "recipe": {
+   "ingredients": [
+    [
+     "mod:SunstoneShard",
+     1
+    ],
+    [
+     "vanilla:BottledWater",
+     1
+    ]
+   ],
+   "station": "vanilla:Bottles"
+  }
+ },
+ {
+  "id": "DuatElixir",
+  "name": "Elixir of the Duat",
+  "tooltip": "See as the dead see.",
+  "kind": "potion",
+  "sprite": "potion",
+  "palette": "duat",
+  "buff": "DuatSight",
+  "seconds": 300,
+  "size": [
+   22,
+   30
+  ],
+  "rarity": "Lime",
+  "value": 12000,
+  "recipe": {
+   "ingredients": [
+    [
+     "mod:DuatShard",
+     1
+    ],
+    [
+     "vanilla:BottledWater",
+     1
+    ]
+   ],
+   "station": "vanilla:Bottles"
+  }
  }
 ]

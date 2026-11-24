@@ -12,7 +12,7 @@ A blueprint is a list of rows (top row first) of one character per tile, in tile
 from .png import write_png
 
 COLORS = {" ": (88, 150, 214), ".": (62, 52, 40), "B": (196, 170, 112), "G": (232, 190, 60), "H": (150, 120, 70), "L": (42, 88, 176), "p": (142, 98, 52),
-          "T": (255, 196, 80), "K": (200, 40, 40), "C": (255, 255, 255), "c": (255, 255, 255), "S": (214, 190, 132)}
+          "T": (255, 196, 80), "K": (200, 40, 40), "C": (255, 255, 255), "c": (255, 255, 255), "S": (214, 190, 132), "w": (104, 92, 116), "R": (170, 130, 70)}
 
 
 def grand_pyramid(spec=None):
@@ -168,7 +168,8 @@ def grand_pyramid(spec=None):
 def connected(bp):
     """Flood-fill from the entrance over every passable tile (air, platform, torch, spike, chest cell). Returns {room: reached} and the reach count."""
     g = bp["rows"]
-    passable = set(".pTKcC")
+    passable = set(".pTKcCwR")
+    ground = bp["ground_row"]
     ex, ey = bp["entrance"]
     seen = {(ex, ey)}
     stack = [(ex, ey)]
@@ -176,7 +177,7 @@ def connected(bp):
         x, y = stack.pop()
         for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nx, ny = x + dx, y + dy
-            if 0 <= ny < len(g) and 0 <= nx < len(g[0]) and (nx, ny) not in seen and g[ny][nx] in passable:
+            if 0 <= ny < len(g) and 0 <= nx < len(g[0]) and (nx, ny) not in seen and (g[ny][nx] in passable or (g[ny][nx] == " " and ny < ground)):
                 seen.add((nx, ny))
                 stack.append((nx, ny))
     reach = {}

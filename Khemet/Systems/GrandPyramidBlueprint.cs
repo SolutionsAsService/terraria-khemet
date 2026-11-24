@@ -1,8 +1,8 @@
 namespace Khemet.Systems
 {
-    /// <summary>The Grand Pyramid, drawn one character per tile and run-length encoded (generated from content/structures.json by shadw-mod; do not edit).
+    /// <summary>The GrandPyramid blueprint, drawn one character per tile and run-length encoded (generated from content/structures.json by shadw-mod; do not edit).
     /// 121 wide, 94 tall, the ground at row 60.</summary>
-    public static class PyramidBlueprint
+    public static class GrandPyramidBlueprint
     {
         public const int Width = 121;
         public const int Height = 94;
@@ -106,7 +106,7 @@ namespace Khemet.Systems
             " 16B89 16"
         };
 
-        /// <summary>Row {r} as one character per tile.</summary>
+        /// <summary>Row r as one character per tile.</summary>
         public static string Decode(int r)
         {
             string s = Rows[r];

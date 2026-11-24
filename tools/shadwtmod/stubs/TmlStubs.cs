@@ -28,7 +28,7 @@ namespace Microsoft.Xna.Framework
         public bool Contains(Point p) => true;
     }
     public struct Color { public Color(int r, int g, int b) { } }
-    public static class MathHelper { public const float PiOver2 = 1.5707964f; }
+    public static class MathHelper { public const float PiOver2 = 1.5707964f; public const float Pi = 3.1415927f; public static float Lerp(float a, float b, float t) => a; }
 }
 
 namespace Terraria
@@ -67,10 +67,14 @@ namespace Terraria
         public static bool[] tileSolid = new bool[10000];
         public static bool[] tileMergeDirt = new bool[10000];
         public static bool[] tileBlockLight = new bool[10000];
+        public static bool[] debuff = new bool[10000];
+        public static bool[] buffNoSave = new bool[10000];
+        public static double rockLayer;
+        public static int maxTilesY;
     }
     public class Item
     {
-        public int width, height, rare, value, damage, useTime, useAnimation, useStyle, mana, shoot, defense, maxStack, stack;
+        public int width, height, rare, value, damage, useTime, useAnimation, useStyle, mana, shoot, defense, maxStack, stack, useAmmo, buffType, buffTime;
         public float knockBack, shootSpeed;
         public DamageClass DamageType;
         public Terraria.Audio.SoundStyle? UseSound;
@@ -88,9 +92,9 @@ namespace Terraria
         public float knockBackResist, value, npcSlots;
         public double frameCounter;
         public Rectangle frame;
-        public bool noGravity, noTileCollide, boss, lavaImmune;
+        public bool noGravity, noTileCollide, boss, lavaImmune, collideX, collideY;
         public Terraria.Audio.SoundStyle? HitSound, DeathSound;
-        public Vector2 velocity, Center;
+        public Vector2 velocity, Center, Bottom;
         public float rotation;
         public float[] ai = new float[4];
         public struct HitModifiers { public StatModifier FinalDamage; }
@@ -105,7 +109,10 @@ namespace Terraria
     {
         public int statLifeMax2, statManaMax2, lifeRegen, maxMinions, whoAmI;
         public float moveSpeed;
-        public bool noFallDmg, ZoneDesert, active, dead;
+        public bool noFallDmg, ZoneDesert, active, dead, noKnockback, ZoneOverworldHeight, ZoneForest, ZoneDirtLayerHeight, ZoneRockLayerHeight;
+        public float accRunSpeed, jumpSpeedBoost;
+        public class HurtInfo { }
+        public void AddBuff(int type, int time) { }
         public Vector2 position, Center;
         private StatModifier dmg; private float crit;
         public ref StatModifier GetDamage(DamageClass c) => ref dmg;
@@ -188,7 +195,7 @@ namespace Terraria.ModLoader
     using Terraria.GameContent.ItemDropRules;
     using Terraria.WorldBuilding;
 
-    public class DamageClass { public static DamageClass Melee, Magic, Generic; }
+    public class DamageClass { public static DamageClass Melee, Magic, Ranged, Generic; }
     public class Mod { }
     public class ItemLoot { public void Add(IItemDropRule r) { } }
     public class NPCLoot { public void Add(IItemDropRule r) { } }
@@ -198,6 +205,7 @@ namespace Terraria.ModLoader
         public static int NPCType<T>() where T : ModNPC => 0;
         public static int ProjectileType<T>() where T : ModProjectile => 0;
         public static int TileType<T>() where T : ModTile => 0;
+        public static int BuffType<T>() where T : ModBuff => 0;
     }
     public class AutoloadBossHeadAttribute : Attribute { }
     public abstract class ModItem
@@ -243,6 +251,13 @@ namespace Terraria.ModLoader
         public Projectile Projectile = new Projectile();
         public virtual void SetDefaults() { }
         public virtual void AI() { }
+        public virtual void OnHitPlayer(Player target, Player.HurtInfo info) { }
+    }
+    public abstract class ModBuff
+    {
+        public int Type;
+        public virtual void SetStaticDefaults() { }
+        public virtual void Update(Player player, ref int buffIndex) { }
     }
     public abstract class ModSystem
     {

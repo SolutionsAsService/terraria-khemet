@@ -10,9 +10,8 @@ using Terraria.WorldBuilding;
 
 namespace Khemet.Systems
 {
-    /// <summary>Adds the Grand Pyramid to world generation, after the vanilla Pyramids pass: finds the sandiest flat stretch of desert, levels it and
-    /// places the blueprint tile by tile, then stocks the chests by role.</summary>
-    public class PyramidGenSystem : ModSystem
+    /// <summary>Adds GrandPyramid to world generation (site: desert) and stocks its chests by role. The layout is GrandPyramidBlueprint.</summary>
+    public class GrandPyramidGenSystem : ModSystem
     {
         private static readonly int[][] ChestCells = new int[][]
         {
@@ -36,7 +35,7 @@ namespace Khemet.Systems
             {
                 index = tasks.Count - 1;
             }
-            tasks.Insert(index + 1, new PassLegacy("Grand Pyramid of Khemet", GenerateGrandPyramid));
+            tasks.Insert(index + 1, new PassLegacy("GrandPyramid", GenerateGrandPyramid));
         }
 
         private static int SurfaceY(int x)
@@ -69,16 +68,17 @@ namespace Khemet.Systems
 
         private static void GenerateGrandPyramid(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "Raising the Grand Pyramid of Khemet";
-            int W = PyramidBlueprint.Width;
-            int H = PyramidBlueprint.Height;
-            int groundRow = PyramidBlueprint.GroundRow;
+            progress.Message = "Building GrandPyramid";
+            int W = GrandPyramidBlueprint.Width;
+            int H = GrandPyramidBlueprint.Height;
+            int groundRow = GrandPyramidBlueprint.GroundRow;
             int bestX = -1;
-            double bestScore = -1.0;
+            double bestScore = -1000.0;
             for (int attempt = 0; attempt < 400; attempt++)
             {
                 int x0 = WorldGen.genRand.Next(Main.maxTilesX / 8, Main.maxTilesX * 7 / 8 - W);
                 int sand = 0;
+                int ground = 0;
                 int count = 0;
                 int minY = int.MaxValue;
                 int maxY = 0;
@@ -92,9 +92,14 @@ namespace Khemet.Systems
                     count++;
                     minY = Math.Min(minY, y);
                     maxY = Math.Max(maxY, y);
-                    if (IsSand(Main.tile[x, y].TileType))
+                    int t = Main.tile[x, y].TileType;
+                    if (IsSand(t))
                     {
                         sand++;
+                    }
+                    else if (t == TileID.Grass || t == TileID.Dirt || t == TileID.Stone)
+                    {
+                        ground++;
                     }
                 }
                 if (count == 0)
@@ -112,7 +117,6 @@ namespace Khemet.Systems
             {
                 return;
             }
-            // the ground line is the median surface across the site
             List<int> ys = new List<int>();
             for (int x = bestX; x < bestX + W; x += 2)
             {
@@ -123,21 +127,19 @@ namespace Khemet.Systems
                 }
             }
             ys.Sort();
-            int ground = ys[ys.Count / 2];
-            int top = ground - groundRow;
-            // clear the sky above the site and fill any hollow below the ground line with sandstone, so the foundation sits on solid ground
+            int groundLine = ys[ys.Count / 2];
+            int top = groundLine - groundRow;
             for (int x = bestX; x < bestX + W; x++)
             {
-                for (int y = top - 2; y < ground; y++)
+                for (int y = top - 2; y < groundLine; y++)
                 {
                     Main.tile[x, y].ClearEverything();
                 }
-                for (int y = ground; y < ground + 3; y++)
+                for (int y = groundLine; y < groundLine + 3; y++)
                 {
                     WorldGen.PlaceTile(x, y, TileID.Sandstone, true, true);
                 }
             }
-            // place the blueprint
             Dictionary<char, int> tiles = new Dictionary<char, int>();
             tiles['B'] = ModContent.TileType<Tiles.PharaohBrickTile>();
             tiles['G'] = ModContent.TileType<Tiles.GoldenSandstoneTile>();
@@ -146,7 +148,7 @@ namespace Khemet.Systems
             for (int r = 0; r < H; r++)
             {
                 progress.Set(r / (float)H);
-                string row = PyramidBlueprint.Decode(r);
+                string row = GrandPyramidBlueprint.Decode(r);
                 for (int c = 0; c < W; c++)
                 {
                     char ch = row[c];
@@ -157,22 +159,24 @@ namespace Khemet.Systems
                         continue;
                     }
                     Tile tile = Main.tile[x, y];
-                    if (ch == '.' || ch == 'c' || ch == 'C' || ch == 'T' || ch == 'p' || ch == 'K')
+                    tile.ClearEverything();
+                    if (ch == '.' || ch == 'c' || ch == 'C' || ch == 'T' || ch == 'p' || ch == 'K' || ch == 'R')
                     {
-                        tile.ClearEverything();
+                        tile.WallType = WallID.SandstoneBrick;
+                    }
+                    else if (ch == 'w')
+                    {
                         tile.WallType = WallID.SandstoneBrick;
                     }
                     else
                     {
-                        tile.ClearEverything();
                         WorldGen.PlaceTile(x, y, tiles[ch], true, true);
                     }
                 }
             }
-            // the pieces that need a neighbour: platforms, spikes and torches (after the walls and floors exist), then the chests
             for (int r = 0; r < H; r++)
             {
-                string row = PyramidBlueprint.Decode(r);
+                string row = GrandPyramidBlueprint.Decode(r);
                 for (int c = 0; c < W; c++)
                 {
                     int x = bestX + c;
@@ -232,7 +236,7 @@ namespace Khemet.Systems
                     break;
                 }
             }
-            Systems.KhemetWorld.PyramidArea = new Rectangle(bestX, top, W, H);
+            Systems.KhemetWorld.GrandPyramidArea = new Rectangle(bestX, top, W, H);
         }
     }
 }

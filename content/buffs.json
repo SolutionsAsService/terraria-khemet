@@ -1,0 +1,24 @@
+[
+ {
+  "id": "SolarBlessing",
+  "name": "Solar Blessing",
+  "description": "Damage and life regeneration increased",
+  "palette": "sun",
+  "glyph": "sun",
+  "effects": {
+   "damage": 0.1,
+   "regen": 2
+  }
+ },
+ {
+  "id": "DuatSight",
+  "name": "Duat Sight",
+  "description": "Critical strike chance and movement speed increased",
+  "palette": "duat",
+  "glyph": "bolt",
+  "effects": {
+   "crit": 10,
+   "speed": 0.12
+  }
+ }
+]

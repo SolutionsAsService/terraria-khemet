@@ -32,7 +32,7 @@ namespace Khemet.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Systems.KhemetWorld.InPyramid(spawnInfo.Player))
+            if (Systems.KhemetWorld.InArea(spawnInfo.Player, Systems.KhemetWorld.GrandPyramidArea))
             {
                 return 0.6f;
             }
